@@ -16,13 +16,15 @@ int main()
     Image heroImage;
     heroImage.loadFromFile("images/b.gif");
 
-    Player player (heroImage, 750, 500, 40, 30, "gamer");
+    Player player (&heroImage, 750, 500, 40, 30, "gamer");
 
     gameLoop lol (&window, 0, &player);
 
-    Enemy E(heroImage, 750, 500, 40, 30, "gameraa");
+    Enemy E(&heroImage, 750, 500, 40, 30, "gameraa");
 
-    lol.enemies.push_back(&E);
+    lol.entities.push_back(&player);
+
+    lol.entities.push_back(&E);
 
     while (window.isOpen())
     {

@@ -8,9 +8,15 @@ class Enemy :
     enum { stay, up, right, down, left, jump} state;
     float timer;
 
-    Enemy(Image &image, float X, float Y, int W, int H, std::string Name)
+    Enemy(Image *image, float X, float Y, int W, int H, std::string Name)
     : Entity(image, X, Y, W, H, Name)
     {
+        health = 10;
+
+        type = unfr;
+
+        sprite.setTextureRect(IntRect(4, 19, w, h));
+
         state = stay;
         timer = 0;
     }
@@ -58,6 +64,8 @@ void Enemy::checkCol(float Vx, float Vy)
 
 void Enemy::update (float time, std::list<Entity*> *l)
 {
+    std::cout << this->health << '\n';
+
     timer += time;
 
     AI(&timer);

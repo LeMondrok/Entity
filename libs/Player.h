@@ -12,9 +12,13 @@ public:
 
     std::list <Weapon*> weapons;
 
-    Player(Image &image, float X, float Y, int W, int H, std::string Name)
+    Player(Image *image, float X, float Y, int W, int H, std::string Name)
     : Entity(image, X, Y, W, H, Name)
     {
+        type = fr;
+
+        sprite.setTextureRect(IntRect(4, 19, w, h));
+
         state = stay;
 
         spawn = 1;
@@ -85,9 +89,6 @@ void Player::update(float time, std::list<Entity*> *l)
     for (std::list<Weapon*>::iterator g = weapons.begin(); g != weapons.end(); g++)
         (*g)->update(time);
 
-    /*for (std::list<Entity*>::iterator b = l->begin(); b != l->end(); b++)
-        if ((*b)->getRekt().intersects(this->getRekt())) std::cout << 1;*/
-
     x += vx * time;
     checkCol(vx, 0);
 
@@ -132,9 +133,9 @@ void Player::control(std::list<Entity*> *l)
         if (sf::Keyboard::isKeyPressed(Keyboard::Space))// && spawn == 1)
         {
             if (vx > 0)
-                weapons.back()->shoot(l,  1, x, y);
+                weapons.back()->shoot(l, 1, &x, &y);
             else
-                weapons.back()->shoot(l, -1, x, y);
+                weapons.back()->shoot(l, -1, &x, &y);
         }
     }
 }

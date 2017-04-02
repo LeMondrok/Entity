@@ -15,11 +15,13 @@ public:
     bool life, onGround;
     unsigned int num;
 
+    enum { unfr, fr, ubul, frbul} type;
+
     sf::Texture texture;
 	sf::Sprite sprite;
 	std::string name;
 
-    Entity (sf::Image &image, float X, float Y, int W, int H, std::string Name)
+    Entity (sf::Image *image, float X, float Y, int W, int H, std::string Name)
     {
         num = ident;
         ident++;
@@ -35,11 +37,9 @@ public:
         vx = 0;
         vy = 0;
 
-        texture.loadFromImage(image);
+        texture.loadFromImage(*image);
         sprite.setTexture (texture);
         sprite.setOrigin(w / 2, h / 2);
-
-        sprite.setTextureRect(IntRect(4, 19, w, h));
     }
 
     float getX ()
@@ -62,12 +62,12 @@ public:
 
     void del(std::list<Entity*> *l)
     {
-        for (std::list<Entity*>::iterator x = l->begin(); x != l->end(); x++)
-            if ((*x)->num == num)
+        for (std::list<Entity*>::iterator X = l->begin(); X != l->end(); X++)
+            if ((*X)->num == num)
             {
-                delete (*x);
+                delete (&X);
 
-                l->erase(x);
+                l->erase(X);
 
                 break;
             }

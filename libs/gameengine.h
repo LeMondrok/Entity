@@ -10,7 +10,7 @@ using namespace sf;
 class gameLoop
 {
 public:
-    std::list <Entity*> enemies;
+    std::list <Entity*> entities;
     Sprite s_map;
     Image map_image;
     Texture map;
@@ -30,13 +30,11 @@ public:
 
     update(float time)
     {
-		p->update(time, &enemies);
+        for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end(); it++)
+            (*it)->update(time, &entities);
 
-        for (std::list<Entity*>::iterator it = enemies.begin(); it != enemies.end(); it++)
-            (*it)->update(time, &enemies);
-
-        draw(window, &s_map, p, &enemies);
-    }
+        draw(window, &s_map, p, &entities);
+     }
 
 private:
     RenderWindow *window;

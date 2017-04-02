@@ -38,11 +38,23 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add directory="H:/dev/Libs/SFML/include" />
+			<Add option="-std=c++11" />
+			<Add directory="E:/personal/docs/libs/SFML/include" />
+			<Add directory="E:/personal/docs/proj/Entity" />
 		</Compiler>
 		<Linker>
-			<Add directory="H:/dev/Libs/SFML/lib" />
+			<Add directory="E:/personal/docs/libs/SFML/lib" />
 		</Linker>
+		<Unit filename="libs/Debug.h" />
+		<Unit filename="libs/Enemy.h" />
+		<Unit filename="libs/Entity.h" />
+		<Unit filename="libs/Player.h" />
+		<Unit filename="libs/draw.h" />
+		<Unit filename="libs/gameengine.h" />
+		<Unit filename="libs/inventory.h" />
+		<Unit filename="libs/map.h" />
+		<Unit filename="libs/physics.h" />
+		<Unit filename="libs/view.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
