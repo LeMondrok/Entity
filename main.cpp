@@ -9,12 +9,28 @@ int main()
 {
     RenderWindow window(VideoMode(640, 480), "");
 
+    view.reset(FloatRect(0, 0, 640, 480));
+
     Clock clock;
 
-    gameLoop lol (&window, 0);
+    Image heroImage;
+    heroImage.loadFromFile("images/b.gif");
+
+    Player player (heroImage, 750, 500, 40, 30, "gamer");
+
+    gameLoop lol (&window, 0, &player);
+
+    Enemy E(heroImage, 750, 500, 40, 30, "gameraa");
+
+    lol.enemies.push_back(&E);
 
     while (window.isOpen())
     {
+        float time = clock.getElapsedTime().asMicroseconds();
+
+		clock.restart();
+		time = time / 800;
+
         Event event;
 
         while (window.pollEvent(event))
@@ -23,6 +39,6 @@ int main()
 				window.close();
 		}
 
-		lol.update();
+		lol.update(time);
     }
 }

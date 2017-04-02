@@ -2,8 +2,10 @@
 #include <SFML/Graphics.hpp>
 #include <libs/map.h>
 #include <libs/Entity.h>
+#include <libs/Player.h>
+#include <libs/Enemy.h>
 #include <iostream>
-#include <set>
+#include <list>
 
 void drawMap (sf::RenderWindow *window, Sprite *s_map)
 {
@@ -19,14 +21,25 @@ void drawMap (sf::RenderWindow *window, Sprite *s_map)
 
             window->draw(*s_map);
         }
-
-    window->display();
 }
 
-void drawEntities (sf::RenderWindow *window, Player *p, std::set <Entity> en)
+void drawEntities (sf::RenderWindow *window, Player *p, std::list <Entity*> *enemies)
 {
-    window->draw (&p->sprite);
+    window->draw (p->sprite);
 
-    //for (int i = en.begin(); i < en.end(); i++)
-    //    window->draw ((*i)->sprite);
+    std::list<Entity*>::iterator it;
+
+    for (it = enemies->begin(); it != enemies->end(); it++)
+        window->draw ((*it)->sprite);
+}
+
+void draw(sf::RenderWindow *window, Sprite *s_map, Player *p, std::list <Entity*> *enemies)
+{
+    window->setView(view);
+    window->clear();
+
+    drawMap (window, s_map);
+    drawEntities(window, p, enemies);
+
+    window->display();
 }

@@ -1,17 +1,21 @@
+#pragma once
 #include <libs/draw.h>
 #include <libs/Entity.h>
-#include <set>
+#include <libs/Player.h>
+#include <libs/Enemy.h>
+#include <list>
 
 using namespace sf;
 
 class gameLoop
 {
 public:
+    std::list <Entity*> enemies;
     Sprite s_map;
     Image map_image;
     Texture map;
 
-    gameLoop (RenderWindow *Window, bool choose)
+    gameLoop (RenderWindow *Window, bool choose, Player *P)
     {
         window = Window;
 
@@ -20,11 +24,18 @@ public:
         map.loadFromImage(map_image);
 
         s_map.setTexture(map);
+
+        p = P;
     }
 
-    update()
+    update(float time)
     {
-        drawMap(window, &s_map);
+		p->update(time, &enemies);
+
+        for (std::list<Entity*>::iterator it = enemies.begin(); it != enemies.end(); it++)
+            (*it)->update(time, &enemies);
+
+        draw(window, &s_map, p, &enemies);
     }
 
 private:
@@ -32,6 +43,5 @@ private:
 
     Player *p;
 
-    std::set <Entity> enemies;
-
+    Entity *E;
 };
